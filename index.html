@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آزمون‌های تستی تیمز علوم</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+:root{
+  --indigo:#4338CA; --violet:#7C3AED; --cyan:#06B6D4; --sky:#38BDF8;
+  --sunset-1:#FF7A45; --sunset-2:#FF5064;
+  --bg:#F3F4FC; --bg2:#EAEBFB; --ink-900:#171233; --ink-700:#332b63; --ink-500:#5b4fa3;
+  --green:#16a34a; --green-bg:rgba(34,197,94,.09); --green-border:rgba(22,163,74,.35);
+  --blue:#2563eb; --blue-bg:rgba(59,130,246,.09); --blue-border:rgba(37,99,235,.32);
+  --orange:#ea580c; --orange-bg:rgba(249,115,22,.10); --orange-border:rgba(234,88,12,.32);
+  --red:#dc2626; --red-bg:rgba(220,38,38,.08); --red-border:rgba(220,38,38,.3);
+  --radius-xl:26px; --radius-lg:20px; --radius-md:14px;
+  --shadow: 0 16px 38px -16px rgba(67,56,202,.32);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:'Vazirmatn',Tahoma,sans-serif; direction:rtl;
+  background:
+    radial-gradient(1000px 600px at 8% -10%, rgba(124,58,237,.16), transparent 60%),
+    radial-gradient(900px 560px at 100% 0%, rgba(6,182,212,.14), transparent 55%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+  color:var(--ink-900); min-height:100vh;
+}
+.hidden{display:none !important;}
+button{font-family:inherit;cursor:pointer;}
+img{max-width:100%;display:block;}
+
+.topbar{
+  position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);
+  background:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.6);
+  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.topbar .brand{display:flex;align-items:center;gap:10px;}
+.topbar .logo{
+  width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--indigo),var(--violet));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:var(--shadow);
+}
+.topbar b{font-size:15.5px;}
+.topbar span{display:block;font-size:11.5px;color:var(--ink-500);}
+.btn{
+  border:none;border-radius:999px;padding:10px 20px;font-size:13px;font-weight:700;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);
+}
+.btn-primary{background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;}
+.btn-ghost{background:rgba(255,255,255,.85);color:var(--ink-700);border:1px solid rgba(91,79,163,.25);box-shadow:none;}
+.btn-success{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;}
+.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;}
+.btn-outline{background:transparent;color:var(--indigo);border:2px solid var(--indigo);box-shadow:none;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+.wrap{max-width:820px;margin:0 auto;padding:26px 18px 70px;}
+
+.name-field{
+  max-width:340px;margin:16px auto 0;background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.6);
+  border-radius:16px;padding:12px 16px;box-shadow:var(--shadow);
+}
+.name-field label{display:block;font-size:11.5px;color:var(--ink-500);margin-bottom:6px;font-weight:700;}
+.name-field input{
+  width:100%;border:1px solid rgba(91,79,163,.25);border-radius:10px;padding:9px 12px;font-size:13px;font-family:inherit;
+}
+
+.grade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;}
+@media (max-width:680px){ .grade-grid{grid-template-columns:1fr;} }
+.grade-card{
+  border-radius:var(--radius-xl);padding:28px 20px;text-align:center;
+  background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow);
+  transition:transform .2s ease;
+}
+.grade-card:hover{transform:translateY(-5px);}
+.grade-badge{
+  width:70px;height:70px;border-radius:20px;margin:0 auto 14px;color:#fff;font-weight:900;font-size:24px;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+}
+.grade-card:nth-child(1) .grade-badge{background:linear-gradient(135deg,#4338CA,#7C3AED);}
+.grade-card:nth-child(2) .grade-badge{background:linear-gradient(135deg,var(--sunset-1),var(--sunset-2));}
+.grade-card:nth-child(3) .grade-badge{background:linear-gradient(135deg,#06B6D4,#38BDF8);}
+.grade-card h3{margin:0 0 6px;font-size:17px;}
+.grade-card p{margin:0;font-size:12px;color:var(--ink-500);}
+
+.page-hero{
+  border-radius:var(--radius-xl);padding:26px 26px;color:#fff;margin-bottom:6px;
+  background:linear-gradient(120deg,var(--violet),var(--indigo) 70%);box-shadow:var(--shadow);
+}
+.page-hero h2{margin:0 0 8px;font-size:20px;}
+.page-hero p{margin:0;font-size:13px;opacity:.92;line-height:1.9;}
+
+.back-row{display:flex;align-items:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+
+.exam-card{
+  border-radius:var(--radius-lg);padding:20px;margin-bottom:14px;
+  background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.exam-card .info h4{margin:0 0 6px;font-size:15px;}
+.exam-card .info .meta{font-size:12px;color:var(--ink-500);display:flex;gap:8px;flex-wrap:wrap;}
+.exam-card .info .meta span{background:rgba(91,79,163,.09);padding:3px 10px;border-radius:999px;}
+.notice{
+  font-size:12px;color:var(--orange);background:var(--orange-bg);border:1px solid var(--orange-border);
+  border-radius:12px;padding:10px 14px;margin-bottom:16px;line-height:1.9;
+}
+
+.progress-bar{height:8px;border-radius:999px;background:rgba(91,79,163,.14);overflow:hidden;margin:14px 0 6px;}
+.progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--indigo),var(--cyan));transition:width .3s ease;}
+.progress-label{font-size:12px;color:var(--ink-500);display:flex;justify-content:space-between;margin-bottom:10px;}
+
+.q-card{
+  border-radius:var(--radius-lg);padding:22px;margin-bottom:16px;
+  border:1px solid var(--blue-border);background:var(--blue-bg);box-shadow:var(--shadow);
+}
+.q-card .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.q-card .tagrow span{
+  font-size:11px;font-weight:700;background:rgba(255,255,255,.7);padding:4px 11px;border-radius:999px;color:var(--ink-700);
+}
+.q-body{font-size:15.5px;line-height:2.15;white-space:pre-line;font-weight:500;margin-bottom:16px;}
+
+.img-slot{
+  margin:12px 0;border-radius:14px;border:1.5px dashed rgba(91,79,163,.35);
+  background:rgba(255,255,255,.5);min-height:60px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.img-slot img{display:none;width:100%;max-height:380px;object-fit:contain;}
+.img-slot.has-img{border-style:solid;background:transparent;}
+.img-slot.has-img img{display:block;}
+.img-slot .ph{font-size:11.5px;color:var(--ink-500);padding:12px;text-align:center;}
+.img-slot.has-img .ph{display:none;}
+
+.option-list{display:flex;flex-direction:column;gap:10px;}
+.option-btn{
+  display:flex;align-items:center;gap:12px;text-align:right;width:100%;
+  padding:13px 16px;border-radius:14px;border:2px solid rgba(91,79,163,.2);
+  background:#fff;font-size:14px;line-height:1.9;color:var(--ink-900);font-weight:500;
+  transition:.15s ease;
+}
+.option-btn:hover{border-color:var(--indigo);}
+.option-btn .letter{
+  width:28px;height:28px;border-radius:9px;background:rgba(91,79,163,.1);color:var(--ink-700);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px;flex-shrink:0;
+}
+.option-btn.selected{border-color:var(--indigo);background:rgba(67,56,202,.08);}
+.option-btn.selected .letter{background:var(--indigo);color:#fff;}
+
+.option-btn.review{cursor:default;}
+.option-btn.review.correct-answer{border-color:var(--green-border);background:var(--green-bg);}
+.option-btn.review.correct-answer .letter{background:var(--green);color:#fff;}
+.option-btn.review.wrong-picked{border-color:var(--red-border);background:var(--red-bg);}
+.option-btn.review.wrong-picked .letter{background:var(--red);color:#fff;}
+
+.nav-row{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+
+.score-hero{
+  text-align:center;border-radius:var(--radius-xl);padding:34px 20px;color:#fff;margin-bottom:22px;
+  background:linear-gradient(120deg,var(--indigo),var(--violet) 60%,var(--cyan));box-shadow:var(--shadow);
+}
+.score-hero .big{font-size:44px;font-weight:900;margin-bottom:4px;}
+.score-hero .sub{font-size:13px;opacity:.9;}
+.score-hero .trend{margin-top:10px;font-size:12.5px;background:rgba(255,255,255,.18);display:inline-block;padding:6px 16px;border-radius:999px;}
+
+.chart-card{
+  border-radius:var(--radius-lg);padding:22px;margin-bottom:18px;
+  background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow);
+}
+.chart-card h3{margin:0 0 16px;font-size:15px;}
+.bar-row{margin-bottom:16px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-row .bar-label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px;}
+.bar-track{height:16px;border-radius:999px;background:rgba(91,79,163,.12);overflow:hidden;}
+.bar-fill{height:100%;border-radius:999px;transition:width .6s ease;}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media (max-width:680px){ .chart-grid{grid-template-columns:1fr;} }
+.chart-wrap{position:relative;height:220px;}
+.domain-legend{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.domain-legend .leg-row{display:flex;justify-content:space-between;font-size:12.5px;}
+.domain-legend .dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-left:6px;}
+
+.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:600px){ .time-grid{grid-template-columns:1fr;} }
+.time-cell{border-radius:14px;padding:14px;font-size:12.5px;line-height:1.8;}
+.time-cell .tc-title{font-weight:800;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.time-cell .tc-count{font-size:20px;font-weight:900;margin-bottom:2px;}
+.time-cell.tc-fast-ok{background:var(--green-bg);border:1px solid var(--green-border);}
+.time-cell.tc-slow-ok{background:var(--blue-bg);border:1px solid var(--blue-border);}
+.time-cell.tc-fast-bad{background:var(--orange-bg);border:1px solid var(--orange-border);}
+.time-cell.tc-slow-bad{background:var(--red-bg);border:1px solid var(--red-border);}
+
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+@media (max-width:600px){ .insight-grid{grid-template-columns:1fr;} }
+.insight-card{border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow);}
+.insight-card.strength{background:var(--green-bg);border:1px solid var(--green-border);}
+.insight-card.weakness{background:var(--red-bg);border:1px solid var(--red-border);}
+.insight-card .ic-title{font-size:12px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.insight-card.strength .ic-title{color:var(--green);}
+.insight-card.weakness .ic-title{color:var(--red);}
+.insight-card ul{margin:0;padding-right:18px;font-size:13px;line-height:2;color:var(--ink-900);}
+.insight-card p{margin:0;font-size:13.5px;line-height:1.9;color:var(--ink-900);}
+
+.review-card{
+  border-radius:var(--radius-lg);padding:18px;margin-bottom:14px;
+  background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.6);box-shadow:var(--shadow);
+}
+.review-card .rc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.review-card .rc-num{font-size:12px;font-weight:800;color:var(--ink-500);}
+.review-card .rc-badge{font-size:11px;font-weight:800;padding:4px 11px;border-radius:999px;flex-shrink:0;}
+.review-card .rc-badge.ok{background:var(--green-bg);color:var(--green);}
+.review-card .rc-badge.no{background:var(--red-bg);color:var(--red);}
+.review-card .rc-stem{font-size:13.5px;line-height:1.95;margin-bottom:10px;white-space:pre-line;}
+.review-card .rc-analysis{
+  margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--orange-bg);border:1px solid var(--orange-border);
+  font-size:12.5px;line-height:1.95;color:#6c2c0f;white-space:pre-line;
+}
+.review-card .rc-analysis b{color:var(--orange);}
+.review-card .rc-time{font-size:11px;color:var(--ink-500);margin-top:6px;}
+
+.final-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;}
+
+.profile-score{
+  text-align:center;border-radius:var(--radius-xl);padding:30px 20px;color:#fff;margin-bottom:20px;
+  background:linear-gradient(120deg,var(--sunset-1),var(--violet) 60%,var(--indigo));box-shadow:var(--shadow);
+}
+.profile-score .big{font-size:38px;font-weight:900;}
+.profile-score .sub{font-size:12.5px;opacity:.92;margin-top:4px;}
+
+@media print{
+  .topbar, .btn, .no-print{display:none !important;}
+  body{background:#fff;}
+  .wrap{max-width:100%;padding:0;}
+  .chart-card, .insight-card, .time-cell, .review-card{box-shadow:none;border:1px solid #ddd;break-inside:avoid;}
+  .score-hero, .profile-score{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">آ</div>
+    <div>
+      <b>آزمون‌های تستی تیمز علوم</b>
+      <span>سوالات چهارگزینه‌ای با تصحیح خودکار — پایه هفتم، هشتم و نهم</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div id="view-examlist">
+    <div class="page-hero">
+      <h2 id="examListTitle">آزمون‌های تستی تیمز علوم</h2>
+      <p id="examListSub">هر آزمون ۱۰ سوال چهارگزینه‌ای دارد: ۴ سوال به‌کاربستن، ۳ سوال استدلال و ۳ سوال دانستن — از میان تمام سوالات (پایه هفتم، هشتم و نهم) و از فصل‌های مختلف، بدون تکرار. بعد از پاسخ به همه سوالات، تصحیح خودکار انجام می‌شود.</p>
+    </div>
+    <div class="name-field">
+      <label>نام شما (اختیاری — برای نمایش در پروفایل و کارنامه)</label>
+      <input type="text" id="studentNameInput" placeholder="مثلاً: علی محمدی" oninput="saveStudentName()">
+    </div>
+    <div class="back-row">
+      <button class="btn btn-outline" onclick="showProfileView()">🎓 پروفایل یادگیری من</button>
+    </div>
+    <div id="examListNotice"></div>
+    <div id="examListBox"></div>
+  </div>
+
+  <div id="view-exam" class="hidden">
+    <div class="back-row">
+      <button class="btn btn-ghost" onclick="confirmExitExam()">✕ خروج از آزمون</button>
+    </div>
+    <div class="progress-label">
+      <span id="progressText">سوال ۱ از ۱۰</span>
+      <span id="progressPercent">۰٪</span>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:0%;"></div></div>
+    <div id="examQuestionBox"></div>
+  </div>
+
+  <div id="view-report" class="hidden">
+    <div class="score-hero">
+      <div class="big" id="reportScoreBig">۰ از ۱۰</div>
+      <div class="sub" id="reportScoreSub">درصد پاسخ‌های صحیح</div>
+      <div class="trend hidden" id="reportTrend"></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>📊 عملکرد شما در هر حیطه شناختی</h3>
+      <div id="domainBarsBox"></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>📈 روند پیشرفت شما</h3>
+      <div class="chart-wrap" style="height:240px;"><canvas id="lineChart"></canvas></div>
+      <p id="lineChartNote" style="font-size:11px;color:var(--ink-500);text-align:center;margin-top:6px;"></p>
+    </div>
+
+    <div class="chart-card">
+      <h3>⏱️ تحلیل زمان پاسخ‌گویی</h3>
+      <div class="time-grid" id="timeAnalysisGrid"></div>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card strength">
+        <div class="ic-title">💪 نقاط قوت شما</div>
+        <ul id="strengthList"></ul>
+      </div>
+      <div class="insight-card weakness">
+        <div class="ic-title">📚 نیازمند تقویت</div>
+        <ul id="weaknessList"></ul>
+      </div>
+    </div>
+
+    <div class="chart-card" id="summaryBox" style="background:var(--blue-bg);border-color:var(--blue-border);">
+      <h3>📝 خلاصه و پیشنهاد</h3>
+      <p id="summaryText" style="margin:0;font-size:13.5px;line-height:2;color:var(--ink-900);"></p>
+    </div>
+
+    <div id="reviewListBox"></div>
+
+    <div class="final-actions no-print">
+      <button class="btn btn-success" onclick="window.print()">🖨️ دانلود / چاپ کارنامه (PDF)</button>
+      <button class="btn btn-outline" onclick="showProfileView()">🎓 مشاهده پروفایل یادگیری</button>
+      <button class="btn btn-primary" onclick="showExamListView()">↻ آزمون دیگری امتحان کن</button>
+      <button class="btn btn-ghost" onclick="showExamListView()">🏠 بازگشت به صفحه اصلی</button>
+    </div>
+  </div>
+
+  <div id="view-profile" class="hidden">
+    <div class="back-row">
+      <button class="btn btn-ghost" onclick="showExamListView()">→ بازگشت</button>
+    </div>
+    <div class="profile-score">
+      <div class="big" id="profileScoreBig">۰ از ۱۰۰</div>
+      <div class="sub" id="profileScoreSub">امتیاز کلی یادگیری — <span id="profileNameLabel"></span></div>
+    </div>
+
+    <div class="chart-card" id="profileNoHistory" style="text-align:center;">
+      <p style="font-size:13px;color:var(--ink-500);margin:0;">هنوز هیچ آزمونی ثبت نشده. اول یک آزمون را کامل کن تا پروفایل یادگیری‌ات ساخته شود.</p>
+    </div>
+
+    <div id="profileContent" class="hidden">
+      <div class="chart-card">
+        <h3>📈 روند پیشرفت در طول زمان</h3>
+        <div class="chart-wrap" style="height:260px;"><canvas id="profileLineChart"></canvas></div>
+      </div>
+
+      <div class="insight-grid">
+        <div class="insight-card strength">
+          <div class="ic-title">💪 نقاط قوت شما</div>
+          <ul id="profileStrengthList"></ul>
+        </div>
+        <div class="insight-card weakness">
+          <div class="ic-title">📚 نیازمند تقویت</div>
+          <ul id="profileWeaknessList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="final-actions no-print">
+      <button class="btn btn-success" onclick="window.print()">🖨️ دانلود / چاپ پروفایل (PDF)</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const IMG_BASE_URL = "https://azarsam936-svg.github.io/TIMSS/images/";
+const MCQ_BANK = [
+  {
+    "id": 2,
+    "grade": 7,
+    "chapter": 1,
+    "domain": "",
+    "cognitive": "به یاد آوردن",
+    "year": "",
+    "level": 1,
+    "stem": "رضا با دست زدن به کتری آب متوجه سرد بودن آب کتری شد . رضا از کدام مهارت\nیادگیری در علوم تجربی استفاده کرده است ؟",
+    "options": [
+      "اندازه گیری",
+      "پیش بینی",
+      "آزمایش",
+      "مشاهده"
+    ],
+    "correctIndex": 3,
+    "analysis": "استفاده از دست و حس لامسه نوعی مشاهده است .",
+    "imgbase": "7_1_2"
+  },
+  {
+    "id": 4,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "",
+    "cognitive": "تحلیل",
+    "year": "",
+    "level": 2,
+    "stem": "وزن یک نوزاد انسان در هنگام تولد به کدام گزینه نزدیکتر است؟",
+    "options": [
+      "3 کیلوگرم",
+      "30 کیلوگرم",
+      "3 نیوتون",
+      "30 نیوتون"
+    ],
+    "correctIndex": 3,
+    "analysis": "جرم یک نوزاد تقریبا 3 کیلوگرم است که وزن معادل 30نیوتون خواهد بود .",
+    "imgbase": "7_2_2"
+  },
+  {
+    "id": 6,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "",
+    "cognitive": "تحلیل",
+    "year": "",
+    "level": 3,
+    "stem": "مریم همواره برایش این سوال وجود داشت که چرا یک کشتی فولادی روی آب می\nماند در حالی که یک میخ فولادی کوچک در آب فرو می رود؟ به نظر شما پاسخ\nمناسب این سوال کدام است؟",
+    "options": [
+      "نوع فولاد مورد استفاده در کشتی و میخ متفاوت است",
+      "شوری زیاد آب دریا مانع فرو رفتن کشتی و باعث شناور شدن آن می شود",
+      "با کم کردن حجم کشتی نسبت به جرم آن ، این اتفاق می افتد",
+      "با افزایش حجم کشتی نسبت به جرم آن، این اتفاق می افتد"
+    ],
+    "correctIndex": 3,
+    "analysis": "با توجه به رابطه چگالی (نسبت جرم به حجم) که چگالی با حجم رابطه عکس دارد\nپس کشتی را طوری می سازند که با افزایش حجم نسبت به جرم چگالی آن کمتر شده\nو کشتی روی آب شناور بماند. (نسبت جرم به حجم میخ فولادی بیشتر از کشتی\nاست.(",
+    "imgbase": "7_2_4"
+  },
+  {
+    "id": 8,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "",
+    "cognitive": "فهمیدن و بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "یکی از راههایی که نتیجه اندازه گیری و آزمایش را دقیق تر می کند تکرار\nآزمایش و اندازه گیری است . صدیقه وزن یک جسم را با نیروسنج های مختلف\nاندازه گرفت و مقادیر زیر را بدست آورد .\n8/2 نیوتون – 5/6نیوتون – 2/3 نیوتون – 7/3 نیوتون –3/2نیوتون(\nبر اساس اعداد داده شده وزن این جسم را چند نیوتون گزارش می کنید.\n.",
+    "options": [
+      "3 نیوتون",
+      "7/3نیوتون",
+      "0/3نیوتون",
+      "4/2 نیوتون"
+    ],
+    "correctIndex": 2,
+    "analysis": "برای افزایش دقت در اندازه گیری باید ضمن تکرار اندازه گیری میانگین نیز\nگرفت .\nدر میانگین گرفتن اعدادی که غیرمربوط و نامتعارف است باید حذف نمود .در این\nاندازه گیری5/6 نیوتون نسبت به اعداد دیگر نامتعارف است و باید حذف شود.\nحال باجمع کردن اعداد 12نیوتون و تقسیم بر تعدادآنها 4عدد پاسخ 3 نیوتون می\nباشد .و چون دقت اندازه گیری ترازو یک دهم بوده است پس پاسخ صحیح 0/3نیوتون\nمی باشد.",
+    "imgbase": "7_2_6"
+  },
+  {
+    "id": 9,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "",
+    "cognitive": "فهمیدن و تحلیل",
+    "year": "",
+    "level": 3,
+    "stem": "اگر مطابق شکل سه مایع \"الف\" ، \"ب \" و \" پ \" با جرم های مساوی را در سه ظرف\nمشابه داشته باشیم و تخم مرغی را داخل آن بیاندازیم چه اتفاقی می افتد؟\n\n{{IMG}}",
+    "options": [
+      "اگر تخم مرغ در مایع \" پ \" فرو رود ، حتما در مایع الف و ب هم فرو می رود",
+      "اگر تخم مرغ در مایع \" الف \" فرو رود ،در مایع ب فرو نمی رود ولی در مایع پ فرو می رود",
+      "اگر تخم مرغ در مایع \" ب \" فرو رود ،حتما در مایع پ فرو می رود ولی در مایع الف فرو نمی رود",
+      "اگر تخم مرغ در مایع \" ب \" فرو رود ، حتما در مایع پ فرو می رود و ممکن است در مایع الف هم فرو رود."
+    ],
+    "correctIndex": 0,
+    "analysis": "با توجه به اینکه جرم هر سه مایع برابر است و با توجه به حجم مایعات در سه\nظرف که حجم مایع ظرف الف بیشتر سپس حجم مایع ظرف ب و حجم مایع ظرف پ از همه\nکمتر است چگالی متفاوتی خواهند داشت. در جرم ثابت هر چه حجم بیشتر باشد\nچگالی کمتری دارد . پس چگالی مایع الف> چگالی مایع ب > چگالی مایع پ است.\nوقتی تخم مرغ در مایعی فرو می رود یعنی چگالی تخم مرغ از آن مایع بیشتر\nاست. چون چگالی تخم مرغ از مایع پ بیشتر است پس قطعا در دو مایع دیگر نیز\nفرو می رود.",
+    "imgbase": "7_2_7"
+  },
+  {
+    "id": 12,
+    "grade": 7,
+    "chapter": 3,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "نمودار زير ميزان افزايش حجم هاي مساوي از چنـد مـاده را در اثـر\n\n{{IMG}}\nگـــرم كـــردن بـــه مقـــدار يكســـان نشـــان مـــيدهـــد .\nبراساس اطلاعات نمودار كدام گزينه درست است؟",
+    "options": [
+      "اگر ماده B آب باشد ماده A در آب ته نشن مي شود.",
+      "اگر ماده C شیشه باشد ماده D آلومینیوم است.",
+      "تراكم پذيري ماده B از ماده C كمتر است.",
+      "چگالي ماده E از ماده A بيشتر است."
+    ],
+    "correctIndex": 3,
+    "analysis": "1)ماده A نوعي گاز است كه گازها در آب تهنشين نميشوند.\n2)انبساط جامد فلزي (آلومينيوم) بيشتر از جامد نافلز (شيشه) است.\n3) افزايش حجم ماده B بيشترازماده C است و پس ماده B تراكم پذيري بيشتري\nدارد.\n4) ماده اي كه افزايش حجم كمتري دارد چگالي بيشتري دارد. چگالي ماده E\nازماده A بيشتر است",
+    "imgbase": "7_3_2"
+  },
+  {
+    "id": 13,
+    "grade": 7,
+    "chapter": 3,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "در يك كارخانه توليد گاز براي انتقال گاز،",
+    "options": [
+      "0 ليتر از نوعي گاز را درون كپسولهـاي 5 ليتـري جـا مـيدهنـد. براين اساس چه تغييري در مورد اين گاز نسبت به حالت اوليه روي ميدهد؟ 1 افزايش حجم",
+      "كاهش چگالي",
+      "افزايش جرم",
+      "كاهش فاصله بين ذرات"
+    ],
+    "correctIndex": 3,
+    "analysis": "براي وارد كردن 10 ليتر گاز در يك ظرف 5 ليتري بايد آن را\nفشرده كرد كه براي اين كار فاصله ذرات گاز كاهش يافته و حجم گاز كاهش\nمييابد",
+    "imgbase": "7_3_3"
+  },
+  {
+    "id": 14,
+    "grade": 7,
+    "chapter": 4,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "محمدرضا در حال بازي كردن با يك فنر بود كه متوجه ويژگي جالبي در آن شد. با\nتوجه به شكل اين ويژگـي كداميك از موارد زير است؟\n\n{{IMG}}",
+    "options": [
+      "انعطافپذيري",
+      "سختي",
+      "استحكام",
+      "رسانايي"
+    ],
+    "correctIndex": 0,
+    "analysis": "تغييرشكل يك جسم( فنر) باوارد كردن نيروبه آن وبرگشتن به حالت اول جسم پس\nاز حذف نيروبيان كننده انعطاف پذيري جسم است. (فنر جسمي انعطافپذير است.)",
+    "imgbase": "7_4_1"
+  },
+  {
+    "id": 15,
+    "grade": 7,
+    "chapter": 4,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "در يك آزمايش، گروهي از دانش آموزان چهار ماده « چوب پنبه – جيوه – سكه\nبرنجي – آب » را با هم مخلـوط كرده و در يك ليوان ريختند. در اين شرايط بعد\nاز 5 دقيقه چه اتفاقي ميافتد؟",
+    "options": [
+      "چوب پنبه در آب فرو ميرود.",
+      "سكه برنجي در زير جيوه و آب قرار ميگيرد.",
+      "جيوه در پايين ترين قسمت و چوب پنبه شناور بر آب ميشود.",
+      "جيوه روي آب قرار ميگيرد"
+    ],
+    "correctIndex": 2,
+    "analysis": "با توجه به تفاوت چگالي مواد ذكر شده، مواد از هم جدا شده و براساس چگالي\nاز بيشتر به كمتر روي هم قرار مـيگيرنـد. ترتيـب چگـالي مـواد بـه ايـن\nصورت است: جيوه > سكه برنجي > آب > چوب پنبه",
+    "imgbase": "7_4_2"
+  },
+  {
+    "id": 16,
+    "grade": 7,
+    "chapter": 4,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "آريا هنگام بازي كردن با توپ فوتبال خود متوجه شد كه مواد تشكيل دهنده توپ\nويژگيهـايي دارد كـه آن رابراي بازي فوتبال مناسب كرده است. بر اين اساس\nكدام ويژگي زير در ساخت توپ فوتبال اهميت ندارد؟",
+    "options": [
+      "آب گريز بودن",
+      "انعطاف پذير بودن",
+      "نارسانا بودن",
+      "سبك بودن {{IMG}}"
+    ],
+    "correctIndex": 2,
+    "analysis": "توپ بايد سبك و انعطاف پذير باشد تا آسيب به كسي وارد نكند و با نيروي كم\nمنتقل شود. بدنه توپ بايد آبگريـز باشـد تـا آب را جـذب نكنـد كـه سنگين\nشود. بدنه توپ نارسانا است ولي اين نارسانايي كمكي به استفاده بهتر از توپ\nنميكند و نقشي ندارد. چون با گرما و برق سروكار ندارد.",
+    "imgbase": "7_4_3"
+  },
+  {
+    "id": 22,
+    "grade": 7,
+    "chapter": 5,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "براي جداسازي اتم هاي اكسيژن ازآهن، سنگ معدن را با برخي مواد در كوره هاي\nمخصـوص حـرارت مـي\nدهند. در معادله نوشتاري زير مشخص كنيد هر يك از مواد A و B چه نوع مادهاي\nاست؟\nفلز آهن + B → A  + اكسيدهاي آهن",
+    "options": [
+      "هر دو ماده تركيب هستند.",
+      "هر دو ماده عنصر هستند.",
+      "ماده A تركيب و ماده B عنصر است.",
+      "ماده A عنصر و ماده B تركيب است"
+    ],
+    "correctIndex": 3,
+    "analysis": "ماده A كربن كه يك عنصر است و ماده B كربن دي اكسيد تركيب\nميباشند.",
+    "imgbase": "7_5_1"
+  },
+  {
+    "id": 25,
+    "grade": 7,
+    "chapter": 7,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "{{IMG}}\nشكل زير قسمتي از وضعيت آب و هوايي يك منطقه را نشان ميدهد. كدام پديده\nدر شكل وجود ندارد؟",
+    "options": [
+      "حوضه آبريز",
+      "چرخه آب",
+      "تشكيل غار آهكي",
+      "مسير باران پس از بارش"
+    ],
+    "correctIndex": 2,
+    "analysis": "در شكل نحوه تشكيل غارهاي آهكي و حل شدن سنگهاي آهكي كه منجر\nبه ايجاد فضاهاي خالي بين سنگها شود نشان داده نشده است.",
+    "imgbase": "7_7_2"
+  },
+  {
+    "id": 26,
+    "grade": 7,
+    "chapter": 7,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "شكل زير قسمتي از يك آبخوان را نشان ميدهد. كدام مورد درباره اين آبخوان\nدرست ميباشد؟\n\n{{IMG}}",
+    "options": [
+      "آبخوان تحت فشار- محل تشكيل قنات",
+      "آبخوان آزاد- در دشتها و دامنه كوهها",
+      "آبخوان تحت فشار- در نواحي كوهستاني و شيبدار",
+      "آبخوان آزاد- محل تشكيل چشمه"
+    ],
+    "correctIndex": 2,
+    "analysis": "با وجود قرار گرفتن يك لايه نفوذپذير بين دو لايه نفوذناپذير\nآب خوان از نوع تحت فشار است كه در نواحي كوهستاني و شيبدار تشكيل ميشود.",
+    "imgbase": "7_7_3"
+  },
+  {
+    "id": 27,
+    "grade": 7,
+    "chapter": 7,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "جدول زير ويژگي و مقدار مواد معدني موجود در آب سه نوع رودخانه را در مناطق\nمختلـف كشـورمان بـه درصد بيان نموده است. براساس دادههاي جدول كدام جمله\nدرست است؟\n\n{{IMG}}",
+    "options": [
+      "آب رودخانه C اسيدي نيست.",
+      "احتمال حل شدن آهك در آب رودخانه A وجود دارد.",
+      "درصد املاح معدني موجود در رودخانه A از رودخانه C بيشتر است.",
+      "احتمال اينكه آب رودخانه B نسبت به دو رودخانه ديگر از نوع آب سخت باشد بيشتر است."
+    ],
+    "correctIndex": 1,
+    "analysis": "حل شدن آهك در آب به آن خاصيت بازي ميدهد كه رنگ كاغذ pH را\nآبي ميكند.",
+    "imgbase": "7_7_4"
+  },
+  {
+    "id": 32,
+    "grade": 7,
+    "chapter": 11,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "{{IMG}}\nشکل زیر یک نوع یاخته و اندامکهای درون آن یاخته را نشان\nمیدهد. با توجه به شکل داده شده کددا بادارد دربداره اید\nیاخته درست است؟",
+    "options": [
+      "شکل مربوط به یاختة بدن انسان میتواند باشد.",
+      "در این یاخته حتما دیواره یاخته ای و غشای یاخته ای وجود دارد.",
+      "در این یاخته دستگاه گلژی بزرگترین اندامک است.",
+      "در این شکل میتوکندری (راکیزه) مشاهده نمیشود."
+    ],
+    "correctIndex": 1,
+    "analysis": "با توجه به شکل منظم و چند ضلعی آن یاخته از نوع گیاهی\nاست و یاخته گیاهی دیواره یاخته ای و غشای یاخته ای دارد.\nمیتوکندری در شکل وجود دارد و دستگاه گلژی مشترك بین یاخته\nجانوری و گیاهی است.",
+    "imgbase": "7_11_1"
+  },
+  {
+    "id": 33,
+    "grade": 7,
+    "chapter": 11,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "غشای یاخته ای در تمام یاخته ها ساختمان تقریبا یکسانی دارد .\n\n{{IMG}}\nبا توجه به ساختار غشای یاخته ای،کدام عبارت در مورد آن\nنادرست است؟",
+    "options": [
+      "در ساختار غشا ترکیبات کربوهیدراتی نیز یافت میشود.",
+      "ساختار این غشا عمدتاً از لیپید(چربی) ساخته شده است.",
+      "در ساختار غشای یاخته ای پروتئین های متفاوت به کار رفته است.",
+      "این غشا خاصیت نفوذپذیری انتخلابی دارد یعنی مواد را براساس اندازه انتقال میدهد."
+    ],
+    "correctIndex": 3,
+    "analysis": "غشای یاخته ای براساس نفوذپذیری انتخابی به مواد بر اساس نیاز\nاجازه ورود و خروج میدهد. در ساختار آن از قند که واحلد سازنده\nآن گلوکز است استفاده شده است و باتوجه به شکل سه نوع پروتئین\nمتفاوت دارد و عمدتاً غشا یاخته از لیپید(چربی) ساخته شده است.",
+    "imgbase": "7_11_2"
+  },
+  {
+    "id": 35,
+    "grade": 7,
+    "chapter": 12,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "سارا دو نوع ويتامين C و ويتامين D را به مقداريكساني در دماهاي مختلف قرار\nداده و نتايج آزمايش را در جدول زير ثبت كرده است. بر اساس اين آزمايش و\nنتايج بدست آمده در جدول، كدام نتيجه گيري درمورد اين دو نوع ويتامين درست\nاست؟",
+    "options": [
+      "دما بر ويتاميني كه براي سلامت پوست و لثه مناسب است تاثير كمتري دارد.",
+      "ويتاميني كه در بدن ذخيره مي شود به افزايش دما بيشتر حساس است.",
+      "ويتاميني كه به طور عمده در تخم مرغ وجود دارد بـه افـزايش دمـا حساسـيت كمتري دارد.",
+      "بدن انسان ميتواند ويتاميني كه بيشتر تحت تاثير دما قرارگرفته را با استفاده از {{IMG}} نور آفتاب بسازد."
+    ],
+    "correctIndex": 2,
+    "analysis": "با توجه به داده های جدول نتایج ویتامین C بیشتر از ویتامین\nDتحت تا یر دما از بین میرود. ویتامین C برای سلامت پوست و لثه مفید است و\nویتامین D عمدتا در تخم مرغ بیشتر بوده و با تابش نور خورشید بر پوست در\nبدن تولید می گردد و چون محلول درچربی است در بدن ذخیره میشود.",
+    "imgbase": "7_12_1"
+  },
+  {
+    "id": 36,
+    "grade": 7,
+    "chapter": 12,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "در جدول مقابل چهارنمونه رژيم غذايي براي صبحانه يك نوجوان سالم آورده شده\nاست. كدام رژيم غذايي، نشان دهنده يك تغذيه سالم تر و مفيدتر است؟\n\n{{IMG}}",
+    "options": [
+      "رژيم غذايي A",
+      "رژيم غذايي B",
+      "رژيم غذايي C",
+      "رژيم غذايي D"
+    ],
+    "correctIndex": 1,
+    "analysis": "در بین چهار گروه مواد غذایی موجود در جدول مورد B همه 6گروه\nمواد مغذی را برای بدن تامین میکند. در گروه A وجود کره ومربا در گروه C\nوجود کیک و خامه و در گروه D وجود چای کره و\nمربا در مقایسه با مواد غذایی گروه B سلامتی کمتری برای بدن به همراه دارد.",
+    "imgbase": "7_12_2"
+  },
+  {
+    "id": 37,
+    "grade": 7,
+    "chapter": 13,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "{{IMG}}\nجانورشناسي دريك حفاري علمي، فسيل جمجمه يك نوع جانوررا كشف كرد. با توجه\nبه شكل زير رژيم غذايي اين جانور چه بوده است؟",
+    "options": [
+      "گياهخوار",
+      "گوشتخوار",
+      "همه چيزخوار",
+      "چون كل ساختار بدن او مشخص نيست، نميتوان دقيق نظر داد. (نكته: همه چيز خوار يعني جانداري كه هم گياهخوار و هم گوشتخوار است."
+    ],
+    "correctIndex": 1,
+    "analysis": "با توجه به شکل دندان‌ها که همگی نوک‌تیز هستند و از نوع دندان نیش عمل می‌کنند برای پاره کردن گوشت مناسب بوده و می‌توان نتیجه گرفت جانور گوشتخوار بوده است.",
+    "imgbase": "7_13_1"
+  },
+  {
+    "id": 38,
+    "grade": 7,
+    "chapter": 13,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "شكل زير قسمتي از دستگاه گوارش انسان را نشان مي دهد. كدام عبارت توصيف\nدرستي ازقسمت مشخص شده نيست؟",
+    "options": [
+      "در بخش A محيط به شدت اسيدي بوده كه به گوارش غذا كمك ميكند.",
+      "در بخش D موادي براي كمك به هضم چربي هاي موجود در غذا ساخته و ترشح ميشود.",
+      "در بخش B آب و مواد معدني اضافي جذب ميشود تا بدن با مشكل كم آبي و مواد معدني روبه رو نشود. {{IMG}}",
+      "در بخش C باكتري هايي درحال تغذيه از سلولز و ساختن ويتامین K و برخي ويتامين هاي گروه B هستند."
+    ],
+    "correctIndex": 3,
+    "analysis": "بخش A معده است که در شیره گوارشی آن اسید وجود دارد .\nبخش B فراخ روده است که وظیفله آن جذب آب و مواد معدنی اضافی همراه مواد\nغذایی و جذب ویتامین B و K تولید شده توسط\nباکتری های موجود در فراخ روده است. بخش C باریک روده است که محل گوارش\nنهایی مواد غذایی و جذب مواد مغذی است. بخشD کبد است که صفرا را برای هضم\nچربیها تولید و ترشح میکند.",
+    "imgbase": "7_13_2"
+  },
+  {
+    "id": 39,
+    "grade": 7,
+    "chapter": 14,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "شكل مقابل ساختار داخلي قلب و رگهاي متصل به آن را نشان ميدهد. با توجـه\nبـه شـكل\nداده شده كدام عبارت توصيف درستي ازوضعيت ساختاري قلب است؟",
+    "options": [
+      "رگهاي شماره 4 خون را از قلب به ششها منتقل ميكنند.",
+      "در موقع انقباض دهليزها دريچه شماره 5 بسته است .",
+      "فشار خون در رگ شماره 7 بيشتر از، رگ شماره 12 است .",
+      "قسمت هاي شماره 1 تا 7 همگي خون روشن و شماره 8 تا 12 همگي خون تيره دارند. {{IMG}}"
+    ],
+    "correctIndex": 2,
+    "analysis": "رگهای شماره 4 سیاهرگهای ششی بوده که از شش خون تصفیه شده را\nبه دهلیز چپ قلب می آورند - در موقع انقباض\nدهلیزها دریچه های دولختی و سه لختی باز بوده تا خون را به بطن هامنتقل\nکنند. - رگ شماره 7 چون انشعابی از سرخرگ آئورت بوده\nفشار خون در آن خیلی بیشتر از فشار خون در رگ شلماره 12 که\nبزرگ سیاهرگ زیرین است و فشارخون در سیاهرگ ها کمتر از\nسرخرگها است. - شماره 2 سرخرگ های ششی دارای خون تیره و\nشماره 10 سیاهرگ های ششی دارای خون روشن میباشد.",
+    "imgbase": "7_14_1"
+  },
+  {
+    "id": 40,
+    "grade": 7,
+    "chapter": 14,
+    "domain": "",
+    "cognitive": "",
+    "year": "",
+    "level": 2,
+    "stem": "جدول زير نتايج آزمايش خون سه مراجعه كننده به آزمايشگاه است. با توجه\nنتايج موجود در جدول كدام نتيجه گيري ازاين نتايج درست است؟",
+    "options": [
+      "هر سه مراجعه كننده سالم بوده و بيماري خاصي ندارند .",
+      "افشين به دليل كم بودن مقدار آهن خونش به نوعي كم خوني مبتلا است.",
+      "اگر از دست هر سه نفر در اثر بريدگي (مشابه) خون بيايد، خون ريزي دست اميرعلي كمتر است.",
+      "پيمان به نوعي بيماري ميكروبي مبتلا شده و بدنش در حال دفاع در برابر ميكروبها است {{IMG}}"
+    ],
+    "correctIndex": 3,
+    "analysis": "با بررسی جدول نتایج آزمایش خون سه فرد : پلاکت خون\nامیرعلی از حد طبیعی کمتر است و در صورت خونریزی انعقاد خون\nدر او به درستی صورت نمی گیرد و خون بیشتری از او به هدرمیرود.\n- نتایج خون افشین بیانگر سلامتی او بوده و مشکلی ندارد. -\nبالا بودن تعداد یاخته های سفید پیمان نشانه وجود بیماری میکروبی\nدر بدن او میباشد. زیرا بدن برای مبارزه با میکروب ها یاختله های\nسفید خود را افزایش میدهد. دفای از بدن در برابر عامل های بیگانه\nمثل میکروب ها به عهده یاخته های سفید است.",
+    "imgbase": "7_14_2"
+  },
+  {
+    "id": 43,
+    "grade": 8,
+    "chapter": 1,
+    "domain": "شیمی",
+    "cognitive": "کاربرد",
+    "year": "1999",
+    "level": 2,
+    "stem": "با وسیله‌ای که برای صاف کردن (فیلتراسیون) استفاده می‌شود، کدام مخلوط را\nمی‌توان جدا کرد؟",
+    "options": [
+      "نمک و فلفل",
+      "فلفل و آب",
+      "اکسیژن و آب",
+      "محلول نیترات نقره در آب هـ) محلول شکر در آب"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل: فلفل در آب حل نمی‌شود و می‌توان آن را با صافی جدا کرد.",
+    "imgbase": "8_1_3"
+  },
+  {
+    "id": 46,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "درک مفهوم",
+    "year": "۲۰۰۳",
+    "level": 2,
+    "stem": "چرا باد زدن یک آتش چوبی می‌تواند باعث شود آتش داغ‌تر بسوزد؟",
+    "options": [
+      "چوب را به اندازه کافی گرم می‌کند تا بسوزد.",
+      "اکسیژن بیشتری را که برای سوختن لازم است فراهم می‌کند.",
+      "مقدار چوبی را که برای سوختن وجود دارد افزایش می‌دهد.",
+      "انرژی لازم برای ادامه آتش را فراهم می‌کند."
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل کوتاه: باد زدن باعث رسیدن اکسیژن بیشتری به آتش می‌شود.",
+    "imgbase": "8_2_1"
+  },
+  {
+    "id": 47,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "درک مفهومی",
+    "year": "۲۰۰۳",
+    "level": 2,
+    "stem": "برخی واکنش‌های شیمیایی انرژی جذب می‌کنند و برخی انرژی آزاد می‌کنند. از میان\nواکنش‌های سوختن زغال‌سنگ و منفجر شدن مواد آتش‌بازی، کدام واکنش انرژی آزاد\nمی‌کند؟",
+    "options": [
+      "فقط سوختن زغال‌سنگ",
+      "فقط منفجر شدن مواد آتش‌بازی",
+      "هر دو",
+      "هیچ‌کدام"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_2"
+  },
+  {
+    "id": 48,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "درک مفهومی",
+    "year": "۲۰۰۳",
+    "level": 2,
+    "stem": "کدام مورد یک تغییر شیمیایی است؟",
+    "options": [
+      "عنصر ۱ صیقل داده می‌شود تا سطحی صاف پیدا کند.",
+      "عنصر ۲ گرم می‌شود و تبخیر می‌شود.",
+      "عنصر ۳ پس از ماندن در هوا، سطحی سفید و پودری پیدا می‌کند.",
+      "عنصر ۴ با صاف کردن از یک مخلوط جدا می‌شود."
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_3"
+  },
+  {
+    "id": 50,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "دانستن",
+    "year": "2011",
+    "level": 2,
+    "stem": "در کدام فرایند شیمیایی انرژی جذب می‌شود؟",
+    "options": [
+      "زنگ زدن میخ‌های آهنی",
+      "سوختن شمع‌ها",
+      "پوسیدن سبزیجات",
+      "فتوسنتز گیاهان"
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_5"
+  },
+  {
+    "id": 51,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "دانستن",
+    "year": "ک2011",
+    "level": 2,
+    "stem": "چرا می‌توان یک آتش کوچک را با قرار دادن یک پتوی ضخیم روی آن خاموش کرد؟",
+    "options": [
+      "دما را کاهش می‌دهد.",
+      "شعله‌ها را کوچک‌تر می‌کند.",
+      "ماده در حال سوختن را جذب می‌کند.",
+      "مانع رسیدن اکسیژن به آتش می‌شود."
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_6"
+  },
+  {
+    "id": 53,
+    "grade": 8,
+    "chapter": 3,
+    "domain": "شیمی ـ ساختار ذره‌ای ماده",
+    "cognitive": "دانستن",
+    "year": "۲۰۰۳",
+    "level": 1,
+    "stem": "هسته بیشتر اتم‌ها از چه ذراتی تشکیل شده است؟",
+    "options": [
+      "فقط نوترون‌ها",
+      "پروتون‌ها و نوترون‌ها",
+      "پروتون‌ها و الکترون‌ها",
+      "نوترون‌ها و الکترون‌ها"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل کوتاه: هسته شامل پروتون و نوترون است.",
+    "imgbase": "8_3_2"
+  },
+  {
+    "id": 54,
+    "grade": 8,
+    "chapter": 3,
+    "domain": "شیمی ـ ساختار ذره‌ای ماده",
+    "cognitive": "درک مفهومی",
+    "year": "",
+    "level": 2,
+    "stem": "اگر تمام اتم‌های یک صندلی را از آن خارج کنیم، چه چیزی باقی می‌ماند؟",
+    "options": [
+      "صندلی همچنان وجود خواهد داشت، ولی وزن آن کمتر می‌شود.",
+      "صندلی دقیقاً مانند قبل باقی می‌ماند.",
+      "چیزی از صندلی باقی نمی‌ماند.",
+      "فقط یک حوضچه مایع روی زمین باقی می‌ماند."
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل کوتاه: بدون اتم، ماده‌ای از صندلی باقی نمی‌ماند.",
+    "imgbase": "8_3_3"
+  },
+  {
+    "id": 55,
+    "grade": 8,
+    "chapter": 3,
+    "domain": "شیمی ـ ساختار اتم و یون",
+    "cognitive": "دانستن",
+    "year": "۲۰۰۳",
+    "level": 1,
+    "stem": "اگر یک اتم خنثی یک الکترون به دست آورد، چه چیزی تشکیل می‌شود؟",
+    "options": [
+      "مخلوط",
+      "یون",
+      "مولکول",
+      "فلز"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل کوتاه: با گرفتن الکترون، اتم دارای بار می‌شود",
+    "imgbase": "8_3_4"
+  },
+  {
+    "id": 57,
+    "grade": 8,
+    "chapter": 3,
+    "domain": "شیمی ـ ساختار ماده",
+    "cognitive": "کاربرد",
+    "year": "۲۰۱۱",
+    "level": 2,
+    "stem": "لاستیک یک خودرو از روی یک قوطی عبور می‌کند و آن را کاملاً له می‌کند. درباره\nاتم‌های موجود در ساختار قوطی، کدام یک درست است؟",
+    "options": [
+      "اتم‌ها شکسته شده‌اند،",
+      "اتم‌ها پهن شده‌اند،",
+      "اتم‌ها تغییری نکرده‌اند،",
+      "اتم‌ها به اتم‌های دیگری تبدیل شده‌اند."
+    ],
+    "correctIndex": 2,
+    "analysis": "اتم‌ها از بین نرفته‌اند؛ آرایش و فاصله آن‌ها تغییر کرده است.\nتحلیل کوتاه: تغییر شکل جسم باعث نابودی اتم‌های آن نمی‌شود.",
+    "imgbase": "8_3_6"
+  },
+  {
+    "id": 58,
+    "grade": 9,
+    "chapter": 14,
+    "domain": "زیست",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "ورود و خروج اکسیژن و کربن دی اکسید بین هوا و خون در کدام یک از جانوران\nزیر از راه پوست انجام می\nشود؟",
+    "options": [
+      "ماهی",
+      "قورباغه",
+      "نهنگ",
+      "تمساح"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_14_1"
+  },
+  {
+    "id": 59,
+    "grade": 9,
+    "chapter": 14,
+    "domain": "زیست",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "پرندگان در هوای سرد پرهای خود را پف می کنند. این رفتار چه کمکی به پرنده\nمی کند؟",
+    "options": [
+      "تولید گرما را افزایش می دهد.",
+      "از خشک شدن پوست جلوگیری می کند.",
+      "از دست دادن گرما را کاهش می دهد.",
+      "پرها را از آسیب محافظت می کند"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_14_2"
+  },
+  {
+    "id": 60,
+    "grade": 9,
+    "chapter": 15,
+    "domain": "زیست",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "کدام جاندار تولید کننده است؟",
+    "options": [
+      "درخت",
+      "ماهی",
+      "حشره",
+      "پرنده"
+    ],
+    "correctIndex": 0,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_15_1"
+  },
+  {
+    "id": 62,
+    "grade": 7,
+    "chapter": 14,
+    "domain": "زیست",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "چگونه واکسن زدن به پیشگیری از بیماری هایی چون آنفولانزا کمک می کند؟",
+    "options": [
+      "واکسن زدن باعث جذب بهتر غذا می شود.",
+      "واکسن زدن جریان خون را زیادتر می کند.",
+      "واکسن زدن باعث تحریک تولید پادتن می شود.",
+      "واکسن زدن باعث می شود که داروها موثرتر عمل کند"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_14_3"
+  },
+  {
+    "id": 63,
+    "grade": 7,
+    "chapter": 12,
+    "domain": "زیست",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "کلسیم برای قوی بودن استخوان لازم است. کدام یک از غذاهای زیر منبع مناسبی\nاز کلسیم است؟",
+    "options": [
+      "برنج",
+      "ماکارونی",
+      "گوشت قرمز",
+      "پنیر"
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_12_3"
+  },
+  {
+    "id": 66,
+    "grade": 8,
+    "chapter": 1,
+    "domain": "شیمی",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "برای تهیه آب مقطر، آب آشامیدنی را به جوش می آورند و سپس بخارآب را سرد\nکرده و مایع می کنند. آب مقطر در مقایسه با آب آشامیدنی هیچ طمعی ندارد.\nاختلاف طعم بخاطر کدام مورد زیر است؟",
+    "options": [
+      "جوش آمدن آب در ᵒC 100",
+      "انبساط آب بر اثر گرما",
+      "تغییر چگالی آب بر اثر گرما",
+      "تبخیر نشدن مواد معدنی موجود در آب"
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_1_6"
+  },
+  {
+    "id": 70,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "چهار دانش آموز درباره زنگ زدن میخ تحقیق می کنند.\nمحمود 2 عدد میخ را در ظرف 1 می گذارد.\nاحمد 2 عدد میخ را در ظرف 2 می گذارد و آن ها را با روغن می پوشاند.\nسعید 2 عدد میخ را در ظرف 3 می گذارد و در آن ها را می بندد.\nمسعود 2 عدد میخ را در ظرف 4 می گذارد و کمی آب در آن می ریزد.\n\n{{IMG}}\nبعد از یک هفته در کدام ظرف میخ ها بیشتر زنگ زده است؟",
+    "options": [
+      "ظرف 1",
+      "ظرف 2",
+      "ظرف 3",
+      "ظرف 4"
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_7"
+  },
+  {
+    "id": 73,
+    "grade": 7,
+    "chapter": 3,
+    "domain": "شیمی",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "کدام یک از موارد زیر بهترین رسانا برای گرما و الکتریسیته است؟",
+    "options": [
+      "شیشه",
+      "مس",
+      "پلاستیک",
+      "چوب"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_3_6"
+  },
+  {
+    "id": 75,
+    "grade": 8,
+    "chapter": 2,
+    "domain": "شیمی",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "کدام مثال یک فرآیند شیمیایی است که انرژی آزاد می کند؟",
+    "options": [
+      "جوش آمدن آب",
+      "پختن تخم مرغ خام",
+      "روشن شدن چراغ نفتی",
+      "حل شدن شکر در آب"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "8_2_9"
+  },
+  {
+    "id": 76,
+    "grade": 7,
+    "chapter": 10,
+    "domain": "فیزیک",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "آرش سه ظرف با دمای مساوی دارد. او در هر کدام یک بطری آب سرد می گذارد. او\nچند دقیقه بعد دمای سطح بیرونی هر یک از ظرف ها را اندازه می گیرد. کدام\nجمله درست است؟",
+    "options": [
+      "دمای سطح بیرونی هر سه ظرف با هم برابر است.",
+      "دمای سطح بیرونی ظرف فلزی کمترین است.",
+      "دمای سطح بیرونی ظرف مقوایی کمترین است.",
+      "دمای سطح بیرونی ظرف های مقوایی و چوبی یکسان است."
+    ],
+    "correctIndex": 1,
+    "analysis": "پاسخ: \n{{IMG}}\nپاسخ: گزینه ب",
+    "imgbase": "7_10_1"
+  },
+  {
+    "id": 77,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "فیزیک",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "جرم و حجم آبی که در داخل یک ظرف منجمد می شود چه تغییری می یابد؟",
+    "options": [
+      "جرم و حجم هر دو کاهش می یابد.",
+      "جرم افزایش می یابد و حجم ثابت می ماند",
+      "جرم ثابت می ماند و حجم افزایش می یابد.",
+      "جرم ثابت می ماند و حجم کاهش می یابد."
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_2_10"
+  },
+  {
+    "id": 78,
+    "grade": 7,
+    "chapter": 3,
+    "domain": "فیزیک",
+    "cognitive": "استدلال کردن",
+    "year": "2015",
+    "level": 3,
+    "stem": "دو بطری یکسان از نمونه های X و Y پر شده اند. محتویات این دو بطری را درون\nدو بطری کامل یکسان ولی بزرگتر انتقال داده ایم. مشاهده شد که نمونه X شکل\nظرف جدید را به خود گرفت ولی کاملا آن را پر نکرد اما نمونه Y شکل ظرف جدید\nرا به خود گرفت و کاملا آن را پر کرد. کدام عبارت زیر در مورد نمونه های X\nو Yدرست است؟\n\n{{IMG}}",
+    "options": [
+      "ذرات X بزرگتر از ذرات Y هستند.",
+      "ذرات Y بزرگتر از ذرات X هستند.",
+      "ذرات X نسبت به ذرات Y به هم نزدیکترند.",
+      "ذرات Y نسبت به ذرات X به هم نزدیکترند."
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_3_8"
+  },
+  {
+    "id": 79,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "فیزیک",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "بادکنکی در دست یک کودک است و از گاز هلیوم پر شده است. ناگهان کودک نخ آن\nرا رها می کند و بادکنک به هوا می رود. چرا بادکنک به هوا می رود؟",
+    "options": [
+      "هلیوم از هوا سنگین تر است.",
+      "هلیوم از هوا سبک تر است.",
+      "هلیوم داخل بادکنک از هوا گرم تر است.",
+      "هلیوم داخل بادکنک از هوا پرفشارتر است."
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_2_11"
+  },
+  {
+    "id": 80,
+    "grade": 9,
+    "chapter": 4,
+    "domain": "فیزیک",
+    "cognitive": "استدلال کردن",
+    "year": "2015",
+    "level": 3,
+    "stem": "سارا ثابت ایستاده است و می بیند که کیانوش سوار بر دوچرخه است و در حال\nعبور از کنار او می باشد. کدام گزینه زیر در مورد زنگ دوچرخه کیانوش درست\nاست؟",
+    "options": [
+      "زنگ نسبت به کیانوش و سارا متحرک است.",
+      "زنگ نسبت به کیانوش و سارا متحرک نیست.",
+      "زنگ نسبت به کیانوش متحرک اما نسبت به سارا ثابت است.",
+      "زنگ نسبت به سارا متحرک اما نسبت به کیانوش ثابت است."
+    ],
+    "correctIndex": 3,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_4_1"
+  },
+  {
+    "id": 81,
+    "grade": 7,
+    "chapter": 8,
+    "domain": "فیزیک",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "{{IMG}}\n یک فنر فشرده شده است. فنر فشرده شده چه نوع انرژی دارد؟",
+    "options": [
+      "گرمایی",
+      "الکتریکی",
+      "ذخیره شده",
+      "شیمیایی"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_8_3"
+  },
+  {
+    "id": 83,
+    "grade": 9,
+    "chapter": 9,
+    "domain": "فیزیک",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "از کدام یک از اشیای زیر به احتمال زیاد ، می توان به عنوان اهرم استفاده\nکرد؟",
+    "options": [
+      "غلتک خمیر",
+      "در بازکن نوشابه",
+      "نرده بان",
+      "زیپ کیف"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_9_1"
+  },
+  {
+    "id": 86,
+    "grade": 7,
+    "chapter": 6,
+    "domain": "زمین",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 2,
+    "stem": "درصد کدام گاز در اتمسفر زمین در حال زیاد شدن است؟",
+    "options": [
+      "کربن دی اکسید",
+      "نیتروژن",
+      "بخار آب",
+      "آرگون"
+    ],
+    "correctIndex": 0,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_6_2"
+  },
+  {
+    "id": 89,
+    "grade": 9,
+    "chapter": 10,
+    "domain": "زمین",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "زمین دور محور خود می چرخد. این چرخش باعث ایجاد چه چیزی می شود؟",
+    "options": [
+      "ایجاد فصل ها",
+      "خورشید گرفتگی",
+      "ایجاد شب و روز",
+      "ایجاد جزر و مد"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_10_2"
+  },
+  {
+    "id": 90,
+    "grade": 9,
+    "chapter": 10,
+    "domain": "زمین",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "کدام یک از موارد زیر درباره سایه یک درخت در یک روز آفتابی درست است؟",
+    "options": [
+      "اندازه سایه در طول روز ثابت است.",
+      "کوتاهترین سایه مربوط به وقتی است که خورشید بالای سر است.",
+      "کوتاهترین سایه در زمان طلوع خورشید و بلندترین سایه در هنگام غروب خورشید دیده می شود.",
+      "کوتاهترین سایه در زمان غروب خورشید و بلندترین سایه در هنگام طلوع خورشید دیده می شود."
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "9_10_3"
+  },
+  {
+    "id": 91,
+    "grade": 7,
+    "chapter": 6,
+    "domain": "زمین",
+    "cognitive": "دانستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "کدام یک از فرآیندهای زیر نتیجه تاثیر نیروی جاذبه ماه بر روی زمین است؟",
+    "options": [
+      "زلزله",
+      "جزر و مد",
+      "خورشید گرفتگی کامل",
+      "چرخش زمین به دور محور خود"
+    ],
+    "correctIndex": 1,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_6_3"
+  },
+  {
+    "id": 94,
+    "grade": 7,
+    "chapter": 7,
+    "domain": "زمین",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 1,
+    "stem": "{{IMG}}\nدر چاه آرتزین (آب فشان) آب در میان یکی از لایه های سنگی ذخیره شده است.\nقسمتی از چاه آرتزین در\nزیر نشان داده شده است.\nاگر یک لوله را درون این لایه سنگی قرار دهیم آب از لوله بالا می آید و روی\nزمین می ریزد.\n\n{{IMG}}\nچه چیزی باعث حرکت آب به سمت بالا شده است؟",
+    "options": [
+      "الکتریسیته",
+      "خاصیت آهنربایی",
+      "فشار",
+      "گرانش"
+    ],
+    "correctIndex": 2,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_7_7"
+  },
+  {
+    "id": 95,
+    "grade": 7,
+    "chapter": 7,
+    "domain": "زمین",
+    "cognitive": "بکاربستن",
+    "year": "2015",
+    "level": 3,
+    "stem": "با توجه به سوال قبل و مطابق شکل زیر بیش از صد سال است که از یکی از لوله\nهای آب استفاده می شود. این لوله بسته نشده است اما مقدار آبی که صد سال\nپیش از لوله خارج می شد خیلی بیشتر از مقدار آبی است که امروز از آن خارج\nمی شود. علت تغییر مقدار آب چیست؟\n\n{{IMG}}",
+    "options": [
+      "در لایه سنگی آب کمتری وجود دارد.",
+      "در لایه سنگی آب بیشتری وجود دارد.",
+      "لایه سنگی به عمق بیشتری فرو رفته است .",
+      "لایه سنگی به سطح زمین نزدیک تر شده است."
+    ],
+    "correctIndex": 0,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_7_8"
+  },
+  {
+    "id": 96,
+    "grade": 7,
+    "chapter": 11,
+    "domain": "زیست",
+    "cognitive": "دانستن",
+    "year": "",
+    "level": 1,
+    "stem": "کدام یکی از موارد زیر هدف تنفس سلولی را بهتر بیان می‌کند؟",
+    "options": [
+      "فراهم کردن انرژی برای فعالیت‌های سلول",
+      "تهیه قند برای ذخیره در سلول‌ها.",
+      "آزادسازی اکسیژن برای تنفس.",
+      "تأمین کربن‌دی‌اکسید برای فتوسنتز"
+    ],
+    "correctIndex": 0,
+    "analysis": "تحلیل تکمیلی برای این سوال ثبت نشده است.",
+    "imgbase": "7_11_5"
+  },
+  {
+    "id": 98,
+    "grade": 9,
+    "chapter": 8,
+    "domain": "فیزیک",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "مردی به بالای یک کوه بسیار بلند رفت، در قله کوه همه آبی را که در بطری\nپلاستیکی به همراه داشت نوشید و سپس درِ بطری را بست. او وقتی به اردوگاهش\nدر پایین دره برگشت، متوجه شد که بطری خالی مچاله شده است. کدام جمله زیر\nدلیل این اتفاق را بهتر توضیح می‌دهد؟",
+    "options": [
+      "دمای هوا در دره کمتر از دمای هوا در بالای کوه است.",
+      "دمای هوا در دره بیشتر از دمای هوا در بالای کوه است.",
+      "فشار هوا در دره کمتر از فشار هوا در بالای کوه است.",
+      "فشار هوا در دره بیشتر از فشار هوا در بالای کوه است."
+    ],
+    "correctIndex": 3,
+    "analysis": "فشار هوا در دره بیشتر از فشار هوا در بالای کوه است",
+    "imgbase": "9_8_1"
+  },
+  {
+    "id": 99,
+    "grade": 7,
+    "chapter": 3,
+    "domain": "فیزیک",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "کدام یکی از توضیحات زیر درباره اینکه چرا بعضی از «قطعه‌های ریل» راه‌آهن را\nبا فاصله کار می‌گذارند درست‌تر است؟\n\n{{IMG}}",
+    "options": [
+      "تا در روزهای گرم، ریل‌های فلزی برای انبساط جا داشته باشند؛",
+      "تا در روزهای سرد، ریل‌های فلزی برای انبساط جا داشته باشند",
+      "تا هوای داخل این فاصله ریل‌ها را خنک کند؛",
+      "تا ریل‌ها بتوانند هنگام عبور قطار به لرزش درآیند."
+    ],
+    "correctIndex": 0,
+    "analysis": "تا در روزهای گرم، ریل‌های فلزی برای انبساط جا داشته باشند",
+    "imgbase": "7_3_9"
+  },
+  {
+    "id": 101,
+    "grade": 9,
+    "chapter": 10,
+    "domain": "زمین",
+    "cognitive": "دانستن",
+    "year": "",
+    "level": 1,
+    "stem": "تفاوت اصلی میان سیاره‌ها و قمرها در منظومه شمسی چیست؟",
+    "options": [
+      "روی همه سیاره‌ها می‌توان زندگی کرد، اما روی قمرها نمی‌توان زندگی کرد.",
+      "همه سیاره‌ها اتمسفر دارند، اما قمرها اتمسفر ندارند.",
+      "همه سیاره‌ها به دور خورشید می‌چرخند، اما همه قمرها به دور سیاره‌ها می‌چرخند.",
+      "همه سیاره‌ها بزرگ‌تر از همه قمرها هستند."
+    ],
+    "correctIndex": 2,
+    "analysis": "همه سیاره‌ها به دور خورشید می‌چرخند، اما قمرها به دور سیاره‌ها\nمی‌چرخند",
+    "imgbase": "9_10_4"
+  },
+  {
+    "id": 105,
+    "grade": 9,
+    "chapter": 7,
+    "domain": "زمین",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "{{IMG}}\n\nدر شکل زیر، لایه‌های سنگی فسیل‌دار در یک منطقه نشان داده شده است؛ لایه F\nبالاترین لایه و لایه A پایین‌ترین لایه است. کدام عبارت در مورد سن این\nفسیل‌ها به احتمال زیاد درست‌تر است؟",
+    "options": [
+      "فسیل‌های لایه A قدیمی‌ترند چون در عمیق‌ترین لایه قرار دارند؛",
+      "فسیل‌های لایه C جوان‌ترین هستند؛ چون شبیه موجودات زنده امروزی‌اند.",
+      "فسیل‌های لایه D قدیمی‌تر از فسیل‌های لایه A هستند؛ چون فسیل‌های D بزرگ‌ترند.",
+      "فسیل‌های لایه E با فسیل‌های لایه F هم‌سن هستند؛ چون به هم شباهت دارند."
+    ],
+    "correctIndex": 0,
+    "analysis": "فسیل‌های لایه A قدیمی‌ترند چون در عمیق‌ترین لایه قرار دارند",
+    "imgbase": "9_7_2"
+  },
+  {
+    "id": 106,
+    "grade": 9,
+    "chapter": 12,
+    "domain": "زیست",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "سوسن یک گلدان دارد، او آزمایش برای نشان دادن حرکت آب درون یک گیاه و ورود\nآن به هوا انجام می‌دهد. کدام آزمایش این کار را نشان می‌دهد؟\n\n{{IMG}}",
+    "options": [
+      "در ظرف، زیر گلدان آب می‌ریزیم؛ آب از درون این ظرف ناپدید می‌شود.",
+      "یکی از شاخه ‌های گیاه را با کیسه‌ای پلاستیکی می‌پوشانیم و به گیاه آب می‌دهیم؛ در کیسه، قطره‌های آب دیده خواهد شد .",
+      "یک ساقه بریده‌شده را در کیسه‌ای می‌گذاریم؛ در کیسه آب ظاهر خواهد شد.",
+      "یک ساقه بریده‌شده را در یک لیوان آب رنگی قرار می‌دهیم؛ رنگ برگ‌های گیاه تغییر می‌کند."
+    ],
+    "correctIndex": 1,
+    "analysis": "یکی از شاخه‌های گیاه را با کیسه پلاستیکی می‌پوشانیم و به گیاه آب\nمی‌دهیم؛ در کیسه قطره‌های آب دیده می‌شود.",
+    "imgbase": "9_12_1"
+  },
+  {
+    "id": 107,
+    "grade": 8,
+    "chapter": 6,
+    "domain": "زیست",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "محسن به بیماری قند مبتلاست، او باید در خوردن یا آشامیدن کدام یکی از\nموارد زیر احتیاط کند:",
+    "options": [
+      "گوشت گوساله",
+      "تخم‌مرغ",
+      "شیر",
+      "آبمیوه"
+    ],
+    "correctIndex": 3,
+    "analysis": "آبمیوه",
+    "imgbase": "8_6_1"
+  },
+  {
+    "id": 108,
+    "grade": 8,
+    "chapter": 13,
+    "domain": "زمین",
+    "cognitive": "بکاربستن",
+    "year": "",
+    "level": 2,
+    "stem": "دانشمندان فکر می‌کنند دو قطعه سنگی که در این شکل نشان داده شده است، زمان\nیک سنگ بوده‌اند؛ کدام ویژگی آب بیشترین اثر را بر شکسته شدن سنگ به دو قسمت\nدارد؟\n\n{{IMG}}",
+    "options": [
+      "آب هنگام یخ‌زدن، حجمش زیاد می‌شود؛",
+      "آب در 100 درجه سانتی‌گراد جوش می‌آید؛",
+      "چگالی آب کمتر از چگالی سنگ است؛",
+      "آب بسیاری از مواد را در خود حل می‌کند."
+    ],
+    "correctIndex": 0,
+    "analysis": "آب هنگام یخ‌زدن، حجمش زیاد می‌شود.",
+    "imgbase": "8_13_1"
+  },
+  {
+    "id": 113,
+    "grade": 7,
+    "chapter": 12,
+    "domain": "زیست",
+    "cognitive": "دانستن",
+    "year": "",
+    "level": 1,
+    "stem": "کدام نوع غذا بیشترین درصد پروتئین را دارد؟",
+    "options": [
+      "برنج",
+      "خرما",
+      "هویج",
+      "مرغ"
+    ],
+    "correctIndex": 3,
+    "analysis": "مرغ",
+    "imgbase": "7_12_4"
+  },
+  {
+    "id": 115,
+    "grade": 7,
+    "chapter": 11,
+    "domain": "زیست",
+    "cognitive": "دانستن",
+    "year": "",
+    "level": 1,
+    "stem": "بخش‌های تشکیل‌دهنده موجودات زنده از ساده به پیچیده به ترتیب عبارت‌اند از ؟",
+    "options": [
+      "سلول، بافت، اندام، موجود زنده",
+      "سلول، اندام، بافت، موجود زنده",
+      "بافت، سلول، اندام، موجود زنده",
+      "بافت، اندام، سلول، موجود زنده"
+    ],
+    "correctIndex": 0,
+    "analysis": "سلول ← بافت ← اندام ← موجود زنده",
+    "imgbase": "7_11_6"
+  },
+  {
+    "id": 116,
+    "grade": 7,
+    "chapter": 2,
+    "domain": "فیزیک",
+    "cognitive": "استدلال",
+    "year": "",
+    "level": 2,
+    "stem": "{{IMG}}\nسهیل در یک ظرف خالی مقداری شیره ذرت ریخت. سپس همان‌طور که در شکل مقابل\nمی‌بینید، او به دقت یک لایه گلیسرین، آب و روغن به آن افزود. آنگاه او یک\nصفحه کوچک پلاستیکی در ظرف انداخت. کدام عبارت درست است؟",
+    "options": [
+      "چگالی روغن از شیره ذرت بیشتر است.",
+      "چگالی پلاستیک از روغن کمتر است.",
+      "چگالی گلیسرین از روغن بیشتر است.",
+      "چگالی شیره ذرت از آب کمتر است."
+    ],
+    "correctIndex": 2,
+    "analysis": "چگالی گلیسرین از روغن بیشتر است",
+    "imgbase": "7_2_12"
+  }
+];
+</script>
+<script>
+/* =============================================================
+   آزمون‌های تستی تیمز علوم — منطق برنامه
+   (نسخه: سوالات از تمام پایه‌ها با هم، چهارگزینه‌ای، تصحیح خودکار،
+    تحلیل زمان پاسخ‌گویی، نمودار دایره‌ای + خطی، پروفایل یادگیری)
+   ============================================================= */
+
+const GRADE_LABEL = { 7: 'پایه هفتم', 8: 'پایه هشتم', 9: 'پایه نهم' };
+const DOMAIN_ORDER = ['بکاربستن', 'استدلال', 'دانستن'];
+const DOMAIN_TARGET = { 'بکاربستن': 4, 'استدلال': 3, 'دانستن': 3 };
+const DOMAIN_COLOR = { 'بکاربستن': '#7C3AED', 'استدلال': '#FF5064', 'دانستن': '#06B6D4' };
+const DOMAIN_ICON = { 'بکاربستن': '🛠️', 'استدلال': '🧩', 'دانستن': '📘' };
+const OPTION_LETTERS = ['الف', 'ب', 'ج', 'د'];
+const EXAM_SIZE = 10;
+const MAX_EXAMS = 4;
+const HISTORY_KEY = 'timss_exam_history_v1';
+const NAME_KEY = 'timss_student_name_v1';
+
+function classifyDomain(text){
+  const t = (text || '').trim();
+  if(!t) return null;
+  if(t.includes('استدلال') || t.includes('تحلیل')) return 'استدلال';
+  if(t.includes('بکاربستن') || t.includes('بکاریستن') || t.includes('کاربرد') || t.includes('بکار بستن')) return 'بکاربستن';
+  if(t.includes('دانستن') || t.includes('فهمیدن') || t.includes('درک') || t.includes('یاد آوردن')) return 'دانستن';
+  return null;
+}
+
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function seededShuffle(arr, rng){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickWithChapterDiversity(candidates, need, usedChapters){
+  const local = new Set(usedChapters);
+  const remaining = candidates.slice();
+  const result = [];
+  while(result.length < need && remaining.length){
+    let idx = remaining.findIndex(q => !local.has(q.grade + '_' + q.chapter));
+    if(idx === -1) idx = 0;
+    const q = remaining.splice(idx, 1)[0];
+    result.push(q);
+    local.add(q.grade + '_' + q.chapter);
+  }
+  return result;
+}
+
+function buildOneExam(pool, usedIds, rng){
+  const available = pool.filter(q => !usedIds.has(q.id));
+  const buckets = {};
+  DOMAIN_ORDER.forEach(d => {
+    buckets[d] = seededShuffle(available.filter(q => classifyDomain(q.cognitive) === d), rng);
+  });
+
+  const selected = [];
+  const usedChapters = new Set();
+  const domainCounts = {};
+
+  DOMAIN_ORDER.forEach(domain => {
+    const need = DOMAIN_TARGET[domain];
+    const chosen = pickWithChapterDiversity(
+      buckets[domain].filter(q => !selected.includes(q)),
+      need, usedChapters
+    );
+    chosen.forEach(q => usedChapters.add(q.grade + '_' + q.chapter));
+    selected.push(...chosen);
+    domainCounts[domain] = chosen.length;
+  });
+
+  let deficit = EXAM_SIZE - selected.length;
+  if(deficit > 0){
+    const usedIdsInExam = new Set(selected.map(q => q.id));
+    const leftover = seededShuffle(
+      available.filter(q => !usedIdsInExam.has(q.id) && DOMAIN_ORDER.includes(classifyDomain(q.cognitive))),
+      rng
+    );
+    const fill = pickWithChapterDiversity(leftover, deficit, usedChapters);
+    fill.forEach(q => {
+      usedChapters.add(q.grade + '_' + q.chapter);
+      const d = classifyDomain(q.cognitive);
+      domainCounts[d] = (domainCounts[d] || 0) + 1;
+    });
+    selected.push(...fill);
+    deficit = EXAM_SIZE - selected.length;
+  }
+
+  if(deficit > 0){
+    const usedIdsInExam = new Set(selected.map(q => q.id));
+    const anyLeft = seededShuffle(available.filter(q => !usedIdsInExam.has(q.id)), rng);
+    const fill = pickWithChapterDiversity(anyLeft, deficit, usedChapters);
+    fill.forEach(q => {
+      const d = classifyDomain(q.cognitive) || 'دانستن';
+      domainCounts[d] = (domainCounts[d] || 0) + 1;
+    });
+    selected.push(...fill);
+  }
+
+  return {
+    questions: seededShuffle(selected, rng),
+    domainCounts,
+    degraded: selected.length < EXAM_SIZE || DOMAIN_ORDER.some(d => (domainCounts[d]||0) < DOMAIN_TARGET[d]),
+  };
+}
+
+function buildAllExams(){
+  const pool = MCQ_BANK.slice();
+  const usedIds = new Set();
+  const exams = [];
+
+  for(let e = 0; e < MAX_EXAMS; e++){
+    const rng = mulberry32(e * 7919 + 13);
+    const attempt = buildOneExam(pool, usedIds, rng);
+    if(attempt.questions.length < Math.ceil(EXAM_SIZE * 0.6)) break;
+    exams.push(attempt);
+    attempt.questions.forEach(q => usedIds.add(q.id));
+  }
+
+  if(exams.length === 0){
+    const rng = mulberry32(999);
+    const attempt = buildOneExam(pool, new Set(), rng);
+    if(attempt.questions.length > 0) exams.push(attempt);
+  }
+
+  return exams;
+}
+
+let EXAMS = buildAllExams();
+
+let STATE = {
+  examIndex: null,
+  exam: null,
+  currentQ: 0,
+  picks: [],
+  times: [],       // زمان پاسخ‌گویی هر سوال بر حسب ثانیه
+  qStartTime: null,
+};
+
+/* ---------------- نام دانش‌آموز ---------------- */
+function loadStudentName(){
+  try{ return localStorage.getItem(NAME_KEY) || ''; }catch(e){ return ''; }
+}
+function saveStudentName(){
+  try{ localStorage.setItem(NAME_KEY, document.getElementById('studentNameInput').value.trim()); }catch(e){}
+}
+
+/* ---------------- ابزارهای نمایش متن/تصویر ---------------- */
+function esc(s){
+  return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function renderTextWithImage(text, imgBase){
+  if(!text) return '';
+  const parts = text.split('{{IMG}}');
+  const totalImgs = parts.length - 1;
+  return parts.map((part, idx) => {
+    const html = esc(part).replace(/\n/g, '<br>');
+    if(idx === parts.length - 1) return html;
+    if(!imgBase) {
+      return html + `<div class="img-slot"><img src="" alt="تصویر سوال"><span class="ph">🖼️ تصویر این بخش</span></div>`;
+    }
+    const suffix = totalImgs > 1 ? `_${idx+1}` : '';
+    const filename = `${imgBase}${suffix}.jpg`;
+    const url = IMG_BASE_URL + filename;
+    return html + `<div class="img-slot">
+      <img src="${url}" alt="تصویر سوال"
+           onload="this.closest('.img-slot').classList.add('has-img');"
+           onerror="this.style.display='none'; this.closest('.img-slot').classList.remove('has-img');">
+      <span class="ph">🖼️ تصویر این بخش</span>
+    </div>`;
+  }).join('');
+}
+
+function setView(id){
+  ['view-examlist','view-exam','view-report','view-profile'].forEach(v=>{
+    document.getElementById(v).classList.toggle('hidden', v !== id);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------------- لیست آزمون‌ها (صفحه اصلی) ---------------- */
+function renderExamListView(){
+  const nameInput = document.getElementById('studentNameInput');
+  if(nameInput) nameInput.value = loadStudentName();
+
+  document.getElementById('examListNotice').innerHTML = '';
+
+  const box = document.getElementById('examListBox');
+  if(EXAMS.length === 0){
+    box.innerHTML = `<div class="notice">هنوز سوال چهارگزینه‌ای کافی برای ساخت آزمون ثبت نشده است.</div>`;
+    return;
+  }
+  box.innerHTML = EXAMS.map((exam, idx)=>{
+    const gradesInvolved = [...new Set(exam.questions.map(q=>q.grade))].sort((a,b)=>a-b);
+    const chapters = [...new Set(exam.questions.map(q=>`${q.grade}/${q.chapter}`))];
+    return `
+    <div class="exam-card">
+      <div class="info">
+        <h4>آزمون شماره ${idx+1}</h4>
+        <div class="meta">
+          <span>${exam.questions.length} سوال</span>
+          <span>پایه‌های ${gradesInvolved.map(g=>GRADE_LABEL[g]).join('، ')}</span>
+          <span>${DOMAIN_ORDER.map(d=>`${DOMAIN_ICON[d]} ${exam.domainCounts[d]||0}`).join(' · ')}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="startExam(${idx})">شروع آزمون ▶</button>
+    </div>`;
+  }).join('');
+}
+function showExamListView(){ setView('view-examlist'); renderExamListView(); }
+
+/* ---------------- گرفتن آزمون ---------------- */
+function startExam(examIndex){
+  STATE.examIndex = examIndex;
+  STATE.exam = EXAMS[examIndex];
+  STATE.currentQ = 0;
+  STATE.picks = STATE.exam.questions.map(()=> null);
+  STATE.times = STATE.exam.questions.map(()=> null);
+  STATE.qStartTime = Date.now();
+  setView('view-exam');
+  renderExamQuestion();
+  armBackGuard();
+}
+
+function confirmExitExam(){
+  if(confirm('از آزمون خارج می‌شوید؛ نتیجه این آزمون ثبت نخواهد شد. مطمئن هستید؟')){
+    showExamListView();
+  }
+}
+
+function imgBaseFor(q){
+  return q.imgOverride || q.imgbase || null;
+}
+
+function renderExamQuestion(){
+  const total = STATE.exam.questions.length;
+  const i = STATE.currentQ;
+  const q = STATE.exam.questions[i];
+  const domain = classifyDomain(q.cognitive) || 'دانستن';
+  const picked = STATE.picks[i];
+
+  document.getElementById('progressText').textContent = `سوال ${i+1} از ${total}`;
+  document.getElementById('progressPercent').textContent = Math.round((i/total)*100) + '٪';
+  document.getElementById('progressFill').style.width = Math.round((i/total)*100) + '%';
+
+  const box = document.getElementById('examQuestionBox');
+  box.innerHTML = `
+    <div class="q-card">
+      <div class="tagrow">
+        <span>${DOMAIN_ICON[domain] || ''} حیطه ${domain}</span>
+        <span>${GRADE_LABEL[q.grade]} — فصل ${q.chapter}</span>
+      </div>
+      <div class="q-body">${renderTextWithImage(q.stem, imgBaseFor(q))}</div>
+      <div class="option-list">
+        ${q.options.map((opt, oi)=>`
+          <button class="option-btn ${picked===oi?'selected':''}" onclick="pickOption(${oi})">
+            <span class="letter">${OPTION_LETTERS[oi]}</span>
+            <span>${esc(opt)}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goPrev()" ${i===0?'disabled':''}>→ سوال قبل</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="goNext()" ${picked===null?'disabled':''}>${i===total-1 ? 'پایان آزمون و مشاهده کارنامه 🏁' : 'سوال بعد ←'}</button>
+    </div>
+  `;
+  STATE.qStartTime = Date.now();
+}
+
+function pickOption(oi){
+  const i = STATE.currentQ;
+  if(STATE.times[i] === null){
+    STATE.times[i] = Math.round((Date.now() - STATE.qStartTime) / 1000);
+  }
+  STATE.picks[i] = oi;
+  renderExamQuestion();
+}
+
+function goPrev(){
+  if(STATE.currentQ === 0) return;
+  STATE.currentQ--;
+  renderExamQuestion();
+}
+function goNext(){
+  const total = STATE.exam.questions.length;
+  if(STATE.picks[STATE.currentQ] === null) return;
+  if(STATE.currentQ < total - 1){
+    STATE.currentQ++;
+    renderExamQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+/* ---------------- تاریخچه آزمون‌ها (برای نمودار روند و پروفایل) ---------------- */
+function loadHistory(){
+  try{ return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }catch(e){ return []; }
+}
+function saveHistory(hist){
+  try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(hist.slice(-30))); }catch(e){}
+}
+
+/* ---------------- تصحیح خودکار و کارنامه ---------------- */
+function finishExam(){
+  const questions = STATE.exam.questions;
+  const total = questions.length;
+  let correctCount = 0;
+
+  const domainStats = {};
+  DOMAIN_ORDER.forEach(d => domainStats[d] = { total: 0, correct: 0 });
+  const chapterStats = {}; // key: "grade/chapter" -> {total, correct}
+
+  const results = questions.map((q, i)=>{
+    const picked = STATE.picks[i];
+    const isCorrect = picked === q.correctIndex;
+    if(isCorrect) correctCount++;
+    const d = DOMAIN_ORDER.includes(classifyDomain(q.cognitive)) ? classifyDomain(q.cognitive) : 'دانستن';
+    domainStats[d].total++;
+    if(isCorrect) domainStats[d].correct++;
+    const ck = q.grade + '/' + q.chapter;
+    chapterStats[ck] = chapterStats[ck] || { total: 0, correct: 0, grade: q.grade, chapter: q.chapter };
+    chapterStats[ck].total++;
+    if(isCorrect) chapterStats[ck].correct++;
+    return { q, picked, isCorrect, domain: d, time: STATE.times[i] || 0 };
+  });
+
+  const pct = Math.round((correctCount/total)*100);
+  document.getElementById('reportScoreBig').textContent = `${correctCount} از ${total}`;
+  document.getElementById('reportScoreSub').textContent = `${pct}٪ پاسخ‌های صحیح`;
+
+  // ثبت در تاریخچه
+  const domainPct = {};
+  DOMAIN_ORDER.forEach(d => { domainPct[d] = domainStats[d].total ? Math.round((domainStats[d].correct/domainStats[d].total)*100) : null; });
+  const history = loadHistory();
+  history.push({ ts: Date.now(), scorePct: pct, domainPct, chapterStats });
+  saveHistory(history);
+
+  // مقایسه با آزمون قبلی
+  const trendEl = document.getElementById('reportTrend');
+  if(history.length >= 2){
+    const prev = history[history.length-2].scorePct;
+    const diff = pct - prev;
+    trendEl.classList.remove('hidden');
+    if(diff > 0) trendEl.textContent = `📈 نسبت به آزمون قبلی شما، ${diff}٪ افزایش یافته است`;
+    else if(diff < 0) trendEl.textContent = `📉 نسبت به آزمون قبلی شما، ${Math.abs(diff)}٪ کاهش یافته است`;
+    else trendEl.textContent = `➖ نمره شما نسبت به آزمون قبلی بدون تغییر است`;
+  } else {
+    trendEl.classList.add('hidden');
+  }
+
+  renderDomainBars('domainBarsBox', domainStats);
+  renderLineChart('lineChart', history, 'lineChartNote');
+  renderTimeAnalysis(results);
+  renderInsightLists('strengthList', 'weaknessList', domainStats, chapterStats);
+  renderSummary(pct, domainStats, results);
+  renderReviewList(results);
+
+  setView('view-report');
+  armBackGuard();
+}
+
+/* ---------------- نمودار میله‌ای عملکرد هر حیطه ---------------- */
+function renderDomainBars(boxId, domainStats){
+  const box = document.getElementById(boxId);
+  box.innerHTML = DOMAIN_ORDER.map(d=>{
+    const st = domainStats[d];
+    const p = st.total ? Math.round((st.correct/st.total)*100) : 0;
+    return `
+    <div class="bar-row">
+      <div class="bar-label"><span>${DOMAIN_ICON[d]} حیطه ${d}</span><span>${st.total? (st.correct+' از '+st.total+' ('+p+'٪)') : 'سوالی نداشت'}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${DOMAIN_COLOR[d]};"></div></div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- خلاصه و پیشنهاد ---------------- */
+function renderSummary(pct, domainStats, results){
+  const scored = DOMAIN_ORDER.filter(d=>domainStats[d].total>0)
+    .map(d=>({ domain:d, pct: domainStats[d].correct/domainStats[d].total }));
+  scored.sort((a,b)=> b.pct - a.pct);
+
+  let msg = `در این آزمون ${pct}٪ از سوالات را درست پاسخ دادی. `;
+  if(scored.length){
+    const best = scored[0], worst = scored[scored.length-1];
+    msg += `عملکرد تو در حیطه «${best.domain}» بهترین بود. `;
+    if(worst.domain !== best.domain){
+      msg += `پیشنهاد می‌شود روی حیطه «${worst.domain}» بیشتر تمرین کنی. `;
+    }
+  }
+  const slowWrong = results.filter(r=>!r.isCorrect).length;
+  if(slowWrong > 0){
+    msg += `از بین ${results.length} سوال، ${slowWrong} مورد پاسخ نادرست داشتی — مرور تحلیل هرکدام در پایین می‌تواند به یادگیری بهتر کمک کند.`;
+  } else {
+    msg += `تبریک! به همه سوالات این آزمون درست پاسخ دادی.`;
+  }
+  document.getElementById('summaryText').textContent = msg;
+}
+
+/* ---------------- کنترل دکمه بازگشت مرورگر ----------------
+   هربار که به صفحه‌ای غیر از لیست آزمون‌ها می‌رویم، یک ورودی اضافه
+   به تاریخچه مرورگر اضافه می‌کنیم. با فشردن دکمه بازگشت مرورگر،
+   به‌جای خروج از صفحه، به لیست آزمون‌ها برمی‌گردیم. */
+function armBackGuard(){
+  history.pushState({ timssGuard: true }, '', location.href);
+}
+window.addEventListener('popstate', function(){
+  showExamListView();
+  armBackGuard();
+});
+
+/* ---------------- نمودار خطی روند پیشرفت ---------------- */
+let _lineChartInstance = null;
+function renderLineChart(canvasId, history, noteId){
+  const ctx = document.getElementById(canvasId);
+  if(_lineChartInstance) _lineChartInstance.destroy();
+  const noteEl = document.getElementById(noteId);
+
+  if(history.length < 2){
+    noteEl.textContent = 'این اولین آزمونی است که ثبت کرده‌اید؛ از آزمون بعدی، روند پیشرفت شما نمایش داده می‌شود.';
+  } else {
+    noteEl.textContent = '';
+  }
+
+  const labels = history.map((h,i)=> 'آزمون ' + (i+1));
+  const overallData = history.map(h=>h.scorePct);
+  const datasets = [{
+    label: 'نمره کل', data: overallData, borderColor: '#4338CA', backgroundColor:'#4338CA',
+    tension: .3, borderWidth: 3, pointRadius: 4,
+  }];
+  DOMAIN_ORDER.forEach(d=>{
+    datasets.push({
+      label: 'حیطه ' + d,
+      data: history.map(h => h.domainPct && h.domainPct[d] !== null && h.domainPct[d] !== undefined ? h.domainPct[d] : null),
+      borderColor: DOMAIN_COLOR[d], backgroundColor: DOMAIN_COLOR[d],
+      borderDash: [5,3], tension: .3, borderWidth: 2, pointRadius: 3, spanGaps: true,
+    });
+  });
+
+  _lineChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { min:0, max:100, ticks:{ callback:v=>v+'٪' } } },
+      plugins: { legend: { position: 'bottom', labels:{ boxWidth:10, font:{ size:10 } } } }
+    }
+  });
+}
+
+/* ---------------- تحلیل زمان پاسخ‌گویی ---------------- */
+function renderTimeAnalysis(results){
+  const times = results.map(r=>r.time).filter(t=>t>0);
+  const sorted = times.slice().sort((a,b)=>a-b);
+  const median = sorted.length ? sorted[Math.floor(sorted.length/2)] : 0;
+
+  const buckets = {
+    fastOk: [], slowOk: [], fastBad: [], slowBad: [],
+  };
+  results.forEach(r=>{
+    const isFast = r.time <= median || median === 0;
+    if(r.isCorrect && isFast) buckets.fastOk.push(r);
+    else if(r.isCorrect && !isFast) buckets.slowOk.push(r);
+    else if(!r.isCorrect && isFast) buckets.fastBad.push(r);
+    else buckets.slowBad.push(r);
+  });
+
+  const cells = [
+    { key:'fastOk', cls:'tc-fast-ok', icon:'⚡✅', title:'درست + سریع', desc:'تسلط بالا', list: buckets.fastOk },
+    { key:'slowOk', cls:'tc-slow-ok', icon:'🐢✅', title:'درست + کند', desc:'نیاز به تمرین برای افزایش سرعت', list: buckets.slowOk },
+    { key:'fastBad', cls:'tc-fast-bad', icon:'⚡❌', title:'غلط + سریع', desc:'احتمال بی‌دقتی', list: buckets.fastBad },
+    { key:'slowBad', cls:'tc-slow-bad', icon:'🐢❌', title:'غلط + کند', desc:'احتمال ضعف مفهومی یا تحلیلی', list: buckets.slowBad },
+  ];
+
+  document.getElementById('timeAnalysisGrid').innerHTML = cells.map(c=>`
+    <div class="time-cell ${c.cls}">
+      <div class="tc-title">${c.icon} ${c.title}</div>
+      <div class="tc-count">${c.list.length} سوال</div>
+      <div>${c.desc}</div>
+    </div>
+  `).join('');
+}
+
+/* ---------------- نقاط قوت / ضعف (چندموردی) ---------------- */
+function renderInsightLists(strengthElId, weaknessElId, domainStats, chapterStats){
+  const strengthEl = document.getElementById(strengthElId);
+  const weaknessEl = document.getElementById(weaknessElId);
+  const strengths = [];
+  const weaknesses = [];
+
+  DOMAIN_ORDER.forEach(d=>{
+    const st = domainStats[d];
+    if(!st.total) return;
+    const p = Math.round((st.correct/st.total)*100);
+    if(p >= 70) strengths.push(`حیطه ${d} (${p}٪ درست)`);
+    else if(p < 60) weaknesses.push(`حیطه ${d} (${p}٪ درست)`);
+  });
+
+  Object.values(chapterStats).forEach(cs=>{
+    const p = Math.round((cs.correct/cs.total)*100);
+    if(cs.total >= 1 && p === 100) strengths.push(`${GRADE_LABEL[cs.grade]} — فصل ${cs.chapter} (پاسخ کاملاً صحیح)`);
+    if(cs.total >= 1 && p === 0) weaknesses.push(`${GRADE_LABEL[cs.grade]} — فصل ${cs.chapter} (نیاز به مرور)`);
+  });
+
+  strengthEl.innerHTML = strengths.length
+    ? strengths.map(s=>`<li>${esc(s)}</li>`).join('')
+    : '<li>در این آزمون نقطه قوت برجسته‌ای شناسایی نشد.</li>';
+  weaknessEl.innerHTML = weaknesses.length
+    ? weaknesses.map(s=>`<li>${esc(s)}</li>`).join('')
+    : '<li>نقطه‌ضعف مشخصی شناسایی نشد — عملکرد کلی متعادل بود.</li>';
+}
+
+/* ---------------- مرور سوالات (فقط روی صفحه، نه در چاپ) ---------------- */
+function renderReviewList(results){
+  const reviewBox = document.getElementById('reviewListBox');
+  reviewBox.innerHTML = results.map((r, i)=>{
+    const q = r.q;
+    return `
+    <div class="review-card">
+      <div class="rc-head">
+        <span class="rc-num">سوال ${i+1} — حیطه ${r.domain} — ${GRADE_LABEL[q.grade]} فصل ${q.chapter}</span>
+        <span class="rc-badge ${r.isCorrect?'ok':'no'}">${r.isCorrect?'✅ درست':'❌ نادرست'}</span>
+      </div>
+      <div class="rc-stem">${renderTextWithImage(q.stem, imgBaseFor(q))}</div>
+      <div class="option-list">
+        ${q.options.map((opt, oi)=>{
+          let cls = 'option-btn review';
+          if(oi === q.correctIndex) cls += ' correct-answer';
+          else if(oi === r.picked) cls += ' wrong-picked';
+          return `<div class="${cls}"><span class="letter">${OPTION_LETTERS[oi]}</span><span>${esc(opt)}</span></div>`;
+        }).join('')}
+      </div>
+      <div class="rc-analysis"><b>تحلیل:</b><br>${renderTextWithImage(q.analysis, q.imgbase ? q.imgbase + '_ans' : null)}</div>
+      <div class="rc-time">⏱️ زمان پاسخ‌گویی: ${r.time || 0} ثانیه</div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- پروفایل یادگیری ---------------- */
+let _profileLineChartInstance = null;
+function showProfileView(){
+  setView('view-profile');
+  armBackGuard();
+  const history = loadHistory();
+  const name = loadStudentName();
+  document.getElementById('profileNameLabel').textContent = name || 'دانش‌آموز عزیز';
+
+  if(history.length === 0){
+    document.getElementById('profileNoHistory').classList.remove('hidden');
+    document.getElementById('profileContent').classList.add('hidden');
+    document.getElementById('profileScoreBig').textContent = '۰ از ۱۰۰';
+    return;
+  }
+  document.getElementById('profileNoHistory').classList.add('hidden');
+  document.getElementById('profileContent').classList.remove('hidden');
+
+  const avgScore = Math.round(history.reduce((s,h)=>s+h.scorePct,0) / history.length);
+  document.getElementById('profileScoreBig').textContent = `${avgScore} از ۱۰۰`;
+
+  // میانگین کل به تفکیک حیطه در تمام آزمون‌های ثبت‌شده
+  const domainAgg = {};
+  DOMAIN_ORDER.forEach(d=> domainAgg[d] = { sum:0, count:0 });
+  history.forEach(h=>{
+    DOMAIN_ORDER.forEach(d=>{
+      if(h.domainPct && h.domainPct[d] !== null && h.domainPct[d] !== undefined){
+        domainAgg[d].sum += h.domainPct[d];
+        domainAgg[d].count++;
+      }
+    });
+  });
+
+  // میانگین به تفکیک فصل در تمام آزمون‌ها
+  const chapterAgg = {};
+  history.forEach(h=>{
+    Object.entries(h.chapterStats || {}).forEach(([key, cs])=>{
+      chapterAgg[key] = chapterAgg[key] || { correct:0, total:0, grade:cs.grade, chapter:cs.chapter };
+      chapterAgg[key].correct += cs.correct;
+      chapterAgg[key].total += cs.total;
+    });
+  });
+
+  const strengths = [];
+  const weaknesses = [];
+  DOMAIN_ORDER.forEach(d=>{
+    const a = domainAgg[d];
+    if(!a.count) return;
+    const p = Math.round(a.sum / a.count);
+    if(p >= 70) strengths.push(`حیطه ${d} (میانگین ${p}٪)`);
+    else if(p < 60) weaknesses.push(`حیطه ${d} (میانگین ${p}٪)`);
+  });
+  Object.values(chapterAgg).forEach(cs=>{
+    if(cs.total < 2) return; // برای نتیجه‌گیری در سطح فصل، حداقل دو سوال لازم است
+    const p = Math.round((cs.correct/cs.total)*100);
+    if(p >= 80) strengths.push(`${GRADE_LABEL[cs.grade]} — فصل ${cs.chapter} (${p}٪)`);
+    else if(p <= 40) weaknesses.push(`${GRADE_LABEL[cs.grade]} — فصل ${cs.chapter} (${p}٪)`);
+  });
+
+  document.getElementById('profileStrengthList').innerHTML = strengths.length
+    ? strengths.map(s=>`<li>${esc(s)}</li>`).join('') : '<li>هنوز داده کافی برای شناسایی نقطه قوت ثابت وجود ندارد.</li>';
+  document.getElementById('profileWeaknessList').innerHTML = weaknesses.length
+    ? weaknesses.map(s=>`<li>${esc(s)}</li>`).join('') : '<li>نقطه‌ضعف ثابتی شناسایی نشد.</li>';
+
+  const ctx = document.getElementById('profileLineChart');
+  if(_profileLineChartInstance) _profileLineChartInstance.destroy();
+  const labels = history.map((h,i)=> 'آزمون ' + (i+1));
+  const datasets = [{
+    label: 'نمره کل', data: history.map(h=>h.scorePct), borderColor:'#4338CA', backgroundColor:'#4338CA',
+    tension:.3, borderWidth:3, pointRadius:4,
+  }];
+  DOMAIN_ORDER.forEach(d=>{
+    datasets.push({
+      label: 'حیطه ' + d,
+      data: history.map(h => h.domainPct && h.domainPct[d] !== null && h.domainPct[d] !== undefined ? h.domainPct[d] : null),
+      borderColor: DOMAIN_COLOR[d], backgroundColor: DOMAIN_COLOR[d],
+      borderDash:[5,3], tension:.3, borderWidth:2, pointRadius:3, spanGaps:true,
+    });
+  });
+  _profileLineChartInstance = new Chart(ctx, {
+    type:'line',
+    data:{ labels, datasets },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ y:{ min:0, max:100, ticks:{ callback:v=>v+'٪' } } },
+      plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{ size:10 } } } }
+    }
+  });
+}
+
+/* ---------------- شروع برنامه ---------------- */
+renderExamListView();
+
+</script>
+</body>
+</html>
